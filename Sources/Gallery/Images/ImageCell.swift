@@ -1,12 +1,19 @@
 import UIKit
 import Photos
-
+let heightWidthSelected: CGFloat = 30
+protocol ImageCellDelegate {
+    func selectedImage(indexPath: IndexPath)
+}
 class ImageCell: UICollectionViewCell {
 
-  lazy var imageView: UIImageView = self.makeImageView()
-  lazy var highlightOverlay: UIView = self.makeHighlightOverlay()
-  lazy var frameView: FrameView = self.makeFrameView()
-
+    lazy var imageView: UIImageView = self.makeImageView()
+    lazy var highlightOverlay: UIView = self.makeHighlightOverlay()
+    lazy var frameView: FrameView = self.makeFrameView()
+    lazy var selectedBtn: UIButton = self.selectedView()
+    lazy var titleView: UILabel = self.titleIndexView()
+    var delegate:ImageCellDelegate?
+    var indexPath: IndexPath?
+    var isImage = true
   // MARK: - Initialization
 
   override init(frame: CGRect) {
@@ -41,9 +48,10 @@ class ImageCell: UICollectionViewCell {
   // MARK: - Setup
 
   func setup() {
-    [imageView, frameView, highlightOverlay].forEach {
+    [imageView, frameView, highlightOverlay, selectedBtn, titleView].forEach {
       self.contentView.addSubview($0)
     }
+    
 
     imageView.g_pinEdges()
     frameView.g_pinEdges()
@@ -75,4 +83,34 @@ class ImageCell: UICollectionViewCell {
 
     return frameView
   }
+    
+    private func selectedView() -> UIButton {
+        let selectedButton = UIButton(frame: CGRect(x: self.frame.width - heightWidthSelected - 2, y: 4, width: heightWidthSelected, height: heightWidthSelected))
+        selectedButton.alpha = 1
+//        selectedButton.layer.borderColor = UIColor.gray.cgColor
+//        selectedButton.layer.borderWidth = 1
+        selectedButton.addTarget(self, action: #selector(selectedImage), for: .touchUpInside)
+//        selectedButton.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        selectedButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        selectedButton.titleLabel?.font =  UIFont.systemFont(ofSize: 14)
+        selectedButton.layer.cornerRadius = selectedButton.frame.width / 2
+        selectedButton.setImage(GalleryBundle.image("radio_uncheck"), for: UIControl.State.normal)
+        selectedButton.layer.masksToBounds = true
+      return selectedButton
+    }
+    
+    private func titleIndexView() -> UILabel {
+        let label = UILabel(frame: CGRect(x: self.frame.width - heightWidthSelected - 2, y: 4, width: heightWidthSelected, height: heightWidthSelected))
+        label.font =  UIFont.systemFont(ofSize: 14)
+        
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.black
+        return label
+    }
+    
+    @objc func selectedImage() {
+        if let _delegate = self.delegate, let _indexPath = self.indexPath {
+            _delegate.selectedImage(indexPath: _indexPath)
+        }
+    }
 }

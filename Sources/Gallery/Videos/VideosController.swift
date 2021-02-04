@@ -169,6 +169,8 @@ extension VideosController: UICollectionViewDataSource, UICollectionViewDelegate
     cell.configure(item)
     cell.frameView.label.isHidden = true
     configureFrameView(cell, indexPath: indexPath)
+    cell.delegate = self
+    cell.indexPath = indexPath
 
     return cell
   }
@@ -184,15 +186,7 @@ extension VideosController: UICollectionViewDataSource, UICollectionViewDelegate
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let item = items[(indexPath as NSIndexPath).item]
-
-    if let selectedItem = cart.video , selectedItem == item {
-      cart.video = nil
-    } else {
-      cart.video = item
-    }
-
-    refreshView()
-    configureFrameViews()
+    self.playVideo(viewVC: self, videoAsset: item.asset)
   }
 
   func configureFrameViews() {
@@ -203,13 +197,52 @@ extension VideosController: UICollectionViewDataSource, UICollectionViewDelegate
     }
   }
 
-  func configureFrameView(_ cell: VideoCell, indexPath: IndexPath) {
-    let item = items[(indexPath as NSIndexPath).item]
+    func configureFrameView(_ cell: VideoCell, indexPath: IndexPath) {
+        let item = items[(indexPath as NSIndexPath).item]
 
-    if let selectedItem = cart.video , selectedItem == item {
-      cell.frameView.g_quickFade()
-    } else {
-      cell.frameView.alpha = 0
+        
+        if let selectedItem = cart.video , selectedItem == item {
+            cell.frameView.g_quickFade()
+            cell.selectedBtn.setImage(GalleryBundle.image("radio_check"), for: UIControl.State.normal)
+        } else {
+            cell.selectedBtn.setImage(GalleryBundle.image("radio_uncheck"), for: UIControl.State.normal)
+            cell.frameView.alpha = 0
+        }
     }
-  }
+    
+    func playVideo (viewVC: UIViewController, videoAsset: PHAsset) {
+
+        guard (videoAsset.mediaType == .video) else {
+            print("Not a valid video media type")
+            return
+        }
+
+        PHCachingImageManager().requestAVAsset(forVideo: videoAsset, options: nil) { (asset, audioMix, args) in
+            let asset = asset as! AVURLAsset
+
+            DispatchQueue.main.async {
+                let player = AVPlayer(url: asset.url)
+                let playerViewController = AVPlayerViewController()
+                playerViewController.player = player
+                viewVC.present(playerViewController, animated: true) {
+                    playerViewController.player!.play()
+                }
+            }
+        }
+    }
+}
+
+extension VideosController: ImageCellDelegate {
+    func selectedImage(indexPath: IndexPath) {
+        let item = items[(indexPath as NSIndexPath).item]
+
+        if let selectedItem = cart.video , selectedItem == item {
+          cart.video = nil
+        } else {
+          cart.video = item
+        }
+
+        refreshView()
+        configureFrameViews()
+    }
 }

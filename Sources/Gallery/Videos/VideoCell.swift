@@ -11,7 +11,7 @@ class VideoCell: ImageCell {
 
   func configure(_ video: Video) {
     super.configure(video.asset)
-
+    self.isImage = false
     video.fetchDuration { duration in
       DispatchQueue.main.async {
         self.durationLabel.text = "\(Utils.format(duration))"

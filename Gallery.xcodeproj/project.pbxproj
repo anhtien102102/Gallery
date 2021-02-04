@@ -59,6 +59,7 @@
 		3605648225837D3F00B9F493 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605644D25837D3F00B9F493 /* LocationManager.swift */; };
 		3605648325837D3F00B9F493 /* PagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605644F25837D3F00B9F493 /* PagesController.swift */; };
 		3605648425837D3F00B9F493 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3605645025837D3F00B9F493 /* PageIndicator.swift */; };
+		BBD2063E25CB989500AB77C2 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD2063D25CB989500AB77C2 /* PreviewViewController.swift */; };
 		D27B72ED1D6EEEC80093318F /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27B72EC1D6EEEC80093318F /* Tests.swift */; };
 		D2D1A6F41F84F4DB0083D4C5 /* GalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D1A6C31F84F4DB0083D4C5 /* GalleryController.swift */; };
 		D5B2E8AA1C3A780C00C0327D /* Gallery.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Gallery.framework */; };
@@ -127,6 +128,7 @@
 		3605644D25837D3F00B9F493 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		3605644F25837D3F00B9F493 /* PagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagesController.swift; sourceTree = "<group>"; };
 		3605645025837D3F00B9F493 /* PageIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
+		BBD2063D25CB989500AB77C2 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		D27B72EC1D6EEEC80093318F /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		D27B730C1D6EF04D0093318F /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cartography.framework; path = Carthage/Build/iOS/Cartography.framework; sourceTree = "<group>"; };
 		D2D1A6C31F84F4DB0083D4C5 /* GalleryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryController.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				3605642B25837D3F00B9F493 /* Utils */,
 				3605641125837D3F00B9F493 /* Videos */,
 				D2D1A6C31F84F4DB0083D4C5 /* GalleryController.swift */,
+				BBD2063D25CB989500AB77C2 /* PreviewViewController.swift */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				3605646125837D3F00B9F493 /* Cart.swift in Sources */,
 				3605646525837D3F00B9F493 /* UIBlurEffect+Style.swift in Sources */,
 				3605648325837D3F00B9F493 /* PagesController.swift in Sources */,
+				BBD2063E25CB989500AB77C2 /* PreviewViewController.swift in Sources */,
 				3605645125837D3F00B9F493 /* VideosController.swift in Sources */,
 				3605648125837D3F00B9F493 /* PermissionController.swift in Sources */,
 				3605647525837D3F00B9F493 /* AVAsset+Extensions.swift in Sources */,

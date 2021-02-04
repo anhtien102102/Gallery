@@ -212,6 +212,8 @@ extension ImagesController: UICollectionViewDataSource, UICollectionViewDelegate
 
     cell.configure(item)
     configureFrameView(cell, indexPath: indexPath)
+    cell.delegate = self
+    cell.indexPath = indexPath
 
     return cell
   }
@@ -227,16 +229,8 @@ extension ImagesController: UICollectionViewDataSource, UICollectionViewDelegate
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let item = items[(indexPath as NSIndexPath).item]
-
-    if cart.images.contains(item) {
-      cart.remove(item)
-    } else {
-      if Config.Camera.imageLimit == 0 || Config.Camera.imageLimit > cart.images.count{
-        cart.add(item)
-      }
-    }
-
-    configureFrameViews()
+    let previewVC = PreviewViewController(asset: item.asset)
+    self.present(previewVC, animated:true, completion: nil)
   }
 
   func configureFrameViews() {
@@ -252,9 +246,26 @@ extension ImagesController: UICollectionViewDataSource, UICollectionViewDelegate
 
     if let index = cart.images.firstIndex(of: item) {
       cell.frameView.g_quickFade()
-      cell.frameView.label.text = "\(index + 1)"
+        cell.titleView.text = "\(index + 1)"
     } else {
       cell.frameView.alpha = 0
+        cell.titleView.text = ""
     }
   }
+}
+
+extension ImagesController : ImageCellDelegate {
+    func selectedImage(indexPath: IndexPath) {
+        let item = items[(indexPath as NSIndexPath).item]
+
+        if cart.images.contains(item) {
+          cart.remove(item)
+        } else {
+          if Config.Camera.imageLimit == 0 || Config.Camera.imageLimit > cart.images.count{
+            cart.add(item)
+          }
+        }
+
+        configureFrameViews()
+    }
 }
