@@ -51,6 +51,11 @@ class PreviewViewController: UIViewController {
         self.imageView?.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.imageView?.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dismissClick))
+        pan.maximumNumberOfTouches = 1
+        self.imageView?.addGestureRecognizer(pan)
+        self.imageView?.isUserInteractionEnabled = true
+        
         self.closeButton = UIButton(frame: .zero)
         self.view.addSubview(self.closeButton!)
         self.closeButton?.translatesAutoresizingMaskIntoConstraints = false
