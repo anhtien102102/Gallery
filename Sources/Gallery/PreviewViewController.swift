@@ -42,6 +42,7 @@ class PreviewViewController: UIViewController {
     }
     
     func settingView(){
+        self.view.backgroundColor = UIColor.black
         imageView = UIImageView(frame: .zero)
         imageView?.contentMode = .scaleAspectFit
         self.view.addSubview(imageView!)
