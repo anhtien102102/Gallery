@@ -216,17 +216,21 @@ extension VideosController: UICollectionViewDataSource, UICollectionViewDelegate
             print("Not a valid video media type")
             return
         }
-
-        PHCachingImageManager().requestAVAsset(forVideo: videoAsset, options: nil) { (asset, audioMix, args) in
-            let asset = asset as! AVURLAsset
-
-            DispatchQueue.main.async {
-                let player = AVPlayer(url: asset.url)
-                let playerViewController = AVPlayerViewController()
-                playerViewController.player = player
-                viewVC.present(playerViewController, animated: true) {
-                    playerViewController.player!.play()
+        
+        let videoOptions = PHVideoRequestOptions()
+        videoOptions.isNetworkAccessAllowed = true
+        PHCachingImageManager().requestAVAsset(forVideo: videoAsset, options: videoOptions) { (asset, audioMix, args) in
+            if let asset = asset as? AVURLAsset {
+                DispatchQueue.main.async {
+                    let player = AVPlayer(url: asset.url)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    viewVC.present(playerViewController, animated: true) {
+                        playerViewController.player!.play()
+                    }
                 }
+            } else {
+                print("DKM cannot load video from GALLERY")
             }
         }
     }
