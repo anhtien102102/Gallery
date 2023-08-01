@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import Photos
 
 public protocol GalleryControllerDelegate: class {
 
@@ -16,8 +17,17 @@ open class GalleryController: UIViewController, PermissionControllerDelegate {
   public let cart = Cart()
 
   // MARK: - Init
+    
+    @objc public func setCardImage(assets: [PHAsset], alert: UIAlertController) {
+        cart.images.removeAll()
+        for asset in assets {
+            cart.images.append(Image(asset: asset))
+        }
+        Gallery.Config.Camera.alertLimitSelect = alert
+    }
 
   public required init() {
+      Gallery.Config.Camera.alertLimitSelect = nil
     super.init(nibName: nil, bundle: nil)
   }
 

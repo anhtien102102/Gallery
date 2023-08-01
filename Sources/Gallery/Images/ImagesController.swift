@@ -263,6 +263,10 @@ extension ImagesController : ImageCellDelegate {
         } else {
           if Config.Camera.imageLimit == 0 || Config.Camera.imageLimit > cart.images.count{
             cart.add(item)
+          } else {
+              if let alert = Gallery.Config.Camera.alertLimitSelect {
+                  self.present(alert, animated: true)
+              }
           }
         }
 
